@@ -22,7 +22,7 @@
     <section class="page-header" style="margin:0;padding:50px;">
       <h1 class="project-name">Ark Network Monitor</h1>
       <h2 class="project-tagline">Better understanding of the ARK crypto network</h2>
-      <a href="https://github.com/fix/ark-network-monitor" class="btn">View source on GitHub</a>
+      <a href="https://github.com/arkecosystem/ark-monitor" class="btn">View source on GitHub</a>
     </section>
 
     <section class="container">
@@ -69,10 +69,10 @@
 
       function checkPeers(){
         window.syncdata=[];
-        $.get("http://5.135.102.90:4000/api/peers").success(function(data){
+        $.getJSON("http://5.135.102.90:4000/api/peers?callback=a").success(function(data){
           data.peers.forEach(function(peer){
             if(peer.port>79){
-              $.get("http://"+peer.ip+":"+peer.port+"/api/blocks/getheight").success(function(data2){
+              $.getJSON("http://"+peer.ip+":"+peer.port+"/api/blocks/getheight?callback=a").success(function(data2){
                 data2.version=peer.version
                 data2.ip=peer.ip;
                 window.syncdata.push(data2);
@@ -80,7 +80,7 @@
             }
           });
         });
-        $.get("http://5.135.102.90:4000/api/blocks/getheight").success(function(data2){
+        $.getJSON("http://5.135.102.90:4000/api/blocks/getheight?callback=a").success(function(data2){
           data2.ip="<span class='text-danger'>Seed (5.135.102.90:4000)</span>";
           window.syncdata.push(data2);
         });
